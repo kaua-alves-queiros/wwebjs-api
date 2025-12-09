@@ -53,14 +53,12 @@ jobs:
           else
             echo "tags=avoylenko/wwebjs-api:${{ github.ref_name }},avoylenko/wwebjs-api:latest" >> $GITHUB_OUTPUT
           fi
-      - name: Install edge version of whatsapp-web.js
-        if: github.ref_name == 'edge'
-        run: |
-          npm install --save-exact github:pedroslopez/whatsapp-web.js#main
       - name: Build and push with dynamic tag
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            USE_EDGE=${{ github.ref_name == 'edge' }}
           no-cache: ${{ github.ref_name == 'edge' }}

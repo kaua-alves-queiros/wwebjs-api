@@ -9,9 +9,15 @@ WORKDIR /usr/src/app
 
 FROM base AS deps
 
+ARG USE_EDGE=false
+
 COPY package*.json ./
 
-RUN npm ci --only=production --ignore-scripts
+RUN if [ "$USE_EDGE" = "true" ]; then \
+      npm install --save-exact --omit=dev --ignore-scripts github:pedroslopez/whatsapp-web.js#main; \
+    else \
+      npm ci --only=production --ignore-scripts; \
+    fi
 
 # Create the final stage
 FROM base
