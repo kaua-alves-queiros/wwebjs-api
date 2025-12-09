@@ -57,16 +57,10 @@ jobs:
         if: github.ref_name == 'edge'
         run: |
           npm install --save-exact github:pedroslopez/whatsapp-web.js#main
-      - name: Verify edge version update
-        if: github.ref_name == 'edge'
-        run: |
-          echo "package.json content:"
-          grep "whatsapp-web.js" package.json
-          echo "package-lock.json content:"
-          grep -A 5 '"whatsapp-web.js"' package-lock.json | head -10
       - name: Build and push with dynamic tag
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          no-cache: ${{ github.ref_name == 'edge' }}
