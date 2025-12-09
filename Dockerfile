@@ -14,7 +14,8 @@ ARG USE_EDGE=false
 COPY package*.json ./
 
 RUN if [ "$USE_EDGE" = "true" ]; then \
-      npm install --save-exact --omit=dev --ignore-scripts github:pedroslopez/whatsapp-web.js#main; \
+      npm ci --only=production --ignore-scripts && \
+      npm install --save-exact github:pedroslopez/whatsapp-web.js#main; \
     else \
       npm ci --only=production --ignore-scripts; \
     fi
