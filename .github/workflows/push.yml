@@ -56,8 +56,7 @@ jobs:
       - name: Install edge version of whatsapp-web.js
         if: github.ref_name == 'edge'
         run: |
-          sed -i 's|"whatsapp-web.js": "[^"]*"|"whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#main"|' package.json
-          npm install --package-lock-only
+          npm install github:pedroslopez/whatsapp-web.js#main
       - name: Build and push with dynamic tag
         uses: docker/build-push-action@v5
         with:
