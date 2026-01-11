@@ -2,6 +2,7 @@
 FROM node:22-bookworm-slim AS base
 
 ENV CHROME_BIN="/usr/bin/chromium" \
+    PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium" \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true" \
     NODE_ENV="production"
 
